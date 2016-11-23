@@ -51,6 +51,12 @@ module Xiaomi
               params[type[:query].to_sym] = value
             end
 
+            tmp_params = {}
+            params.keys.collect do |key|
+              tmp_params[key.gsub("@" , "")] = params[key]
+            end
+            params = tmp_params
+
             r = RestClient.post url, params, @context.header
             data = MultiJson.load r
           else

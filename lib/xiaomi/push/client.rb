@@ -7,7 +7,7 @@ module Xiaomi
       include Const
 
       attr_reader :device, :secret, :header
-      def initialize(secret)
+      def initialize(secret , push_type)
         @device = self.class.name.split('::')[-1].upcase
         @secret = secret
 
@@ -19,7 +19,11 @@ module Xiaomi
           'Authorization' => "key=#{@secret}"
         }
 
-        use_production!
+        if push_type.eql?(:production)
+          use_production!
+        elsif push_type.eql?(:development)
+          use_sandbox!
+        end
       end
 
       def message
