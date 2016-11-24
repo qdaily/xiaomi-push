@@ -25,12 +25,12 @@ module Xiaomi
         def build
           hash_data = {}
           instance_variables.each do |ivar|
-            key = ivar.to_s.delete('@', '')
+            key = ivar.to_s.gsub('@', '')
             value = instance_variable_get ivar
 
             next unless value
 
-            if key == 'extras'
+            if key.to_s == 'extras'
               value.each do |k, v|
                 key = "extra.#{k}"
                 hash_data[key] = v
